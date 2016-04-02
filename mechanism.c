@@ -25,7 +25,7 @@
 //#define T2
 //#define SEM
 //#define EVF
-#define MSGQ
+//#define MSGQ
 
 RT_TASK sem_task1;
 RT_TASK sem_task2;

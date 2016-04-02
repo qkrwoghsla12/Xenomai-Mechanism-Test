@@ -1,29 +1,27 @@
 SKIN = native
 
-XENO ?= /mxq-rt/xenomai
+XENO ?= /zynq-rt/xenomai
 XENOCONFIG=$(shell PATH=$(XENO):$(XENO)/bin:$(PATH) which xeno-config 2>/dev/null)
 
 CFLAGS  := $(shell $(XENOCONFIG) --skin=$(SKIN) --cflags)
 LDFLAGS := $(shell $(XENOCONFIG) --skin=$(SKIN) --ldflags) 
 
+all: mechanism
+
 $(TARGET) : $(TARGET).c
 	$(CC) -o $@ $< $(CFLAGS) $(LDFLAGS)
 
-t2 : t2.c
-	$(CC) -o $@ $< $(CFLAGS) $(LDFLAGS)
-
-t1 : t1.c
-	$(CC) -o $@ $< $(CFLAGS) $(LDFLAGS)
-
 mechanism : mechanism.c
-	$(CC) -o $@ $< $(CFLAGS) $(LDFLAGS)
+	$(CC) -o $@ $< $(CFLAGS) $(LDFLAGS) -D T2
 
-sem3 : sem3.c
-	$(CC) -o $@ $< $(CFLAGS) $(LDFLAGS)
+sem : mechanism.c
+	$(CC) -o $@ $< $(CFLAGS) $(LDFLAGS) -D SEM
 
-evf : eventflag.c
-	$(CC) -o $@ $< $(CFLAGS) $(LDFLAGS) -lrtdm
+evf : mechanism.c
+	$(CC) -o $@ $< $(CFLAGS) $(LDFLAGS) -D EVF
+
+msgq : mechanism.c
+	$(CC) -o $@ $< $(CFLAGS) $(LDFLAGS) -D MSGQ
 	
-
 clean :
-	@rm $(TARGET)
+	rm mechanism
