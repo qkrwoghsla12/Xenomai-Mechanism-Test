@@ -1,2 +1,2 @@
 # Xenomai-Mechanism-Test
-xenomai 의 eventflag, semaphore, messagequeue 의 성능을 테스트 하기위함
+xenomai eventflag, semaphore, messagequeue 성능 테스트
